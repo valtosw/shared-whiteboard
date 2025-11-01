@@ -12,7 +12,7 @@ io.on("connect", (socket) => {
   socket.on("draw", (data) => {
     connections.forEach((conn) => {
         if (conn.id !== socket.id) {
-            conn.emit("ondraw", {x: data.x, y: data.y});
+            conn.emit("ondraw", {x: data.x, y: data.y, color: data.color});
         }
     })
   })
@@ -21,6 +21,14 @@ io.on("connect", (socket) => {
     connections.forEach((conn) => {
         if (conn.id !== socket.id) {
             conn.emit("ondown", {x: data.x, y: data.y});
+        }
+    })
+  })
+
+  socket.on("clear", () => {
+    connections.forEach((conn) => {
+        if (conn.id !== socket.id) {
+            conn.emit("onclear");
         }
     })
   })
